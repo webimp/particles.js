@@ -56,6 +56,7 @@ var pJS = function(tag_id, params){
       },
       size: {
         value: 20,
+        value_min: 0,
         random: false,
         anim: {
           enable: false,
@@ -143,6 +144,7 @@ var pJS = function(tag_id, params){
 
   pJS.tmp.obj = {
     size_value: pJS.particles.size.value,
+    size_value_min: pJS.particles.size.value_min,
     size_anim_speed: pJS.particles.size.anim.speed,
     move_speed: pJS.particles.move.speed,
     line_linked_distance: pJS.particles.line_linked.distance,
@@ -169,6 +171,7 @@ var pJS = function(tag_id, params){
     pJS.canvas.h = pJS.canvas.el.offsetHeight * pJS.canvas.pxratio;
 
     pJS.particles.size.value = pJS.tmp.obj.size_value * pJS.canvas.pxratio;
+    pJS.particles.size.value_min = pJS.tmp.obj.size_value_min * pJS.canvas.pxratio;
     pJS.particles.size.anim.speed = pJS.tmp.obj.size_anim_speed * pJS.canvas.pxratio;
     pJS.particles.move.speed = pJS.tmp.obj.move_speed * pJS.canvas.pxratio;
     pJS.particles.line_linked.distance = pJS.tmp.obj.line_linked_distance * pJS.canvas.pxratio;
@@ -242,6 +245,11 @@ var pJS = function(tag_id, params){
 
     /* size */
     this.radius = (pJS.particles.size.random ? Math.random() : 1) * pJS.particles.size.value;
+    
+    if(this.radius < pJS.particles.size.value_min) {
+        this.radius = pJS.particles.size.value_min;
+    }
+    
     if(pJS.particles.size.anim.enable){
       this.size_status = false;
       this.vs = pJS.particles.size.anim.speed / 100;
